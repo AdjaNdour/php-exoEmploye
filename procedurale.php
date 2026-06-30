@@ -145,4 +145,14 @@ function enregistrerProduit(): void{
     $categories[$indexCategorie]["produits"][] = $produit;
     echo "Produit ajoute avec succes.\n";
 }
+
+//5 Ajouter plusieurs produits à une catégorie existante
+
+$indexCategorie = rechercheCategorieExist($categories);
+do {
+    $produit = saisieProduit($categories[$indexCategorie]["produits"]);
+    $categories[$indexCategorie]["produits"][] = $produit;
+    $choix = strtolower(saisieChaine("Voulez-vous ajouter un autre produit ? (oui/non) : "));
+} while ($choix === "oui");
+
 ?>
