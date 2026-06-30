@@ -144,5 +144,80 @@ if ($categorieExiste) {
     echo " désolé , la categorie n'existe pas...";
 }
 
+// 5 Ajouter plusieurs produits a une categorie existante meme regle de validite que la question preccedente ;
 
+$categorieExiste =  false;
+$code = readline("saisir le code :");
+foreach ($categories as $index => $categorie ) {
+    if (($categorie["code"]) === $code) {
+        $categorieExiste = true;
+        break;
+    }
+} 
+
+if ($categorieExiste) {
+    
+    $produits = [];
+
+    do {
+        $codeIsValid = true;
+        do { 
+            $code = readline("saisir le code :");
+            if (empty($code)) {
+                echo "le code est obligatoire \n";
+                $codeIsValid = false;
+            }else{
+                foreach ($categories as  $categorie ) {
+                    if (($categorie["code"]) === $code) {
+                        $codeIsValid = false;
+                        echo "le code existe deja ...\n"; 
+                    }
+                }  
+            }
+        } while (!$codeIsValid);
+
+        $nomIsValid = true;
+        do { 
+            $nom = readline("saisir le nom : ");
+            if (empty($nom)) {
+                echo "le nom est obligatoire";
+                $nomIsValid= false;
+            }else{
+                foreach ($categories as  $categorie ) {
+                    if (($categorie["nom"]) === $nom) {
+                        $nomIsValid = false;
+                        echo "le nom existe deja ..."; 
+                    }
+                }  
+            }
+        } while (!$nomIsValid);
+
+        do {
+            $price = (int)readline("saisir le prix :");
+        } while ($price <= 0);
+
+        do {
+            $quant = (int)readline("saisir la quantite :");
+        } while ($price < 0);
+
+        $produit =[
+            "nom" => $nom,
+            "reference" => $ref,
+            "prix" => $price,
+            "quantite" => $quant
+        ] ;
+
+        $produits[]= $produit;
+        $choix = strtolower(readline(" voulez vous continuer  oui/non "));
+
+    } while ($choix === "oui");
+
+    $categorie= [
+                    "code" => $code,
+                    "nom" => $nom,
+                    "produits" =>  $produits 
+                ];
+
+    $categories[] = $categorie;
+}
 ?>
