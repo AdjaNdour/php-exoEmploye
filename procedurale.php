@@ -28,6 +28,16 @@ $categories = [
     ]
 ];
 
+//2 afficher les categories qui n'ont pas de produits
+
+function afficheCategorieSansProduit(array $categories): void{
+    foreach ($categories as  $categorie ) {
+        if (empty($categorie["produits"])) {
+            echo $categorie["nom"]."\n";
+        }
+    }
+}
+afficheCategorieSansProduit($categories);
 
 
 ?>
