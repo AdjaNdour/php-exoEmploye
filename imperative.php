@@ -79,5 +79,70 @@ $categorie  =   [
 
 $categories[] = $categorie;
 
+//4 ajouter un produit dans une categorie existant 
+
+$categorieExiste =  false;
+$code = readline("saisir le code :");
+
+foreach ($categories as $index => $categorie ) {
+    if (($categorie["code"]) === $code) {
+        $categorieExiste = true;
+        break;
+    }
+} 
+
+if ($categorieExiste) {
+
+    $refIsValid = true;
+    do {    
+        $ref = readline("saisir le reference :");
+        if (empty($ref)) {
+            echo "le reference est obligatoire \n";
+            $refIsValid = false;
+        }else{
+            foreach ($categories as  $categorie ) {
+                if (($categorie["reference"]) === $ref) {
+                    $refIsValid = false;
+                    echo "le ref existe deja ...\n"; 
+                }
+            }  
+        }
+    } while (!$refIsValid);
+
+    $nomIsValid = true;
+    do { 
+        $nom = readline("saisir le nom : ");
+        if (empty($nom)) {
+            echo "le nom est obligatoire";
+            $nomIsValid= false;
+        }else{
+            foreach ($categories as  $categorie ) {
+                if (($categorie["nom"]) === $nom) {
+                    $nomIsValid = false;
+                    echo "le nom existe deja ..."; 
+                }
+            }  
+        }
+    } while (!$nomIsValid);
+
+    do {
+        $price = (int)readline("saisir le prix :");
+    } while ($price <= 0);
+
+    do {
+        $quant = (int)readline("saisir la quantite :");
+    } while ($price < 0);
+
+    $produit =[
+        "nom" => $nom,
+        "reference" => $ref,
+        "prix" => $price,
+        "quantite" => $quant
+    ] ;
+    $categories[$index]["produits"][] = $produit;
+}else {
+    echo " désolé , la categorie n'existe pas...";
+}
+
 
 ?>
